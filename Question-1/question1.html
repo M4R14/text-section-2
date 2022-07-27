@@ -1,0 +1,87 @@
+<html lang="en">
+<head>
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+        }
+        main {
+            display: grid;
+            grid-template-columns: 200px minmax(100px, 1fr) 300px;
+            height: 100vh;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <div  >
+            <input id="input-number"   type="number">
+        </div>
+        <div  >
+            <select id="select">
+                <option value="1">isPrime</option>
+                <option value="2">isFibonacci</option>
+            </select>
+        </div>
+        <div  >
+            <span id="result"></span>
+        </div>
+    </main>
+    <script type="text/javascript">
+        const result = document.getElementById('result');
+        const inputNumber = document.getElementById('input-number');
+        const select = document.getElementById('select');
+
+        inputNumber.addEventListener('change', function(e) {
+            const { value } = e.target;
+            
+            // if value is float, round it to int
+            const valueInt = Math.round(value);
+            if (valueInt !== value) {
+                e.target.value = valueInt;
+            }
+
+            if (value < 0) {
+                e.target.value = 1;
+            }
+
+            getResult();
+        });
+
+        select.addEventListener('change', function(e) {
+            getResult();
+        });
+
+        function getResult() {
+            const number = inputNumber.value;
+            const selectValue = select.value;
+            if (selectValue === '1') {
+                result.innerText = isPrime(number) ? 'true' : 'false';
+            } else if (selectValue === '2') {
+                result.innerText = isFibonacci(number) ? 'true' : 'false';
+            }
+        }
+
+        function isPrime(number) {
+            if (number < 2) {
+                return false;
+            }
+            for (let i = 2; i < number; i++) {
+                if (number % i === 0) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        function isFibonacci(number) {
+            const isSquare = (x) => {
+                let s = parseInt(Math.sqrt(x));
+                return s * s === x;
+            };
+            return isSquare(5 * number * number + 4) || isSquare(5 * number * number - 4);
+        }
+
+    </script>
+</body>
+</html>
